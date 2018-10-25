@@ -12,8 +12,8 @@ namespace CS_FindChinese
         private const int C_MAX_CHAR = 512;
         private int __start_index = 0;
         private SplitPlus sp = new SplitPlus();
-        private ParseFileResult file_result = new ParseFileResult();
-        
+        private List<ParseFileResult> parse_result_list = new List<ParseFileResult>();
+                
         public FileParser( string change_lang_string , int start_index = 0 )
         {
             this.ChangeLangStr = change_lang_string;
@@ -60,6 +60,8 @@ namespace CS_FindChinese
                 return;
             }
 
+            ParseFileResult file_result = new ParseFileResult();
+            parse_result_list.Add(file_result);
             
             file_result.fileInfo = file;
             file_result.need_record_normal_file = ConfigLoader.log_unchanged;
@@ -107,13 +109,11 @@ namespace CS_FindChinese
 
             //尝试记录结果到XML文件
             XMLAllFiles xml_allfile = new XMLAllFiles();
-            xml_allfile.Record(file_result);
-            xml_allfile.Save();
-
+            xml_allfile.Record(this.parse_result_list);
+            
             XmlLanguage xml_lang = new XmlLanguage();
-            xml_lang.Record(file_result);
-            xml_lang.Save();
-
+            xml_lang.Record(this.parse_result_list);
+            
             TextReplacer text_r = new TextReplacer(ConfigLoader.valid_extra_import, ConfigLoader.extra_import_to_append);
             text_r.ReplaceText(file.FullName, file_result);
 

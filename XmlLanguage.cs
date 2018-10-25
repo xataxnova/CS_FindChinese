@@ -23,22 +23,22 @@ namespace CS_FindChinese
             CreateXMLFile();
         }
 
-        public void Record(ParseFileResult file_result)
+        public void Record(List<ParseFileResult> file_result_list)
         {
-            foreach (ParseLineResult line_res in file_result.line_results)
-            {               
-                foreach (ChineseStringData data in line_res.string_Chinese)
+            foreach (ParseFileResult file_result in file_result_list)
+            {
+                foreach (ParseLineResult line_res in file_result.line_results)
                 {
-                    XmlElement Line = m_doc.CreateElement("Langs");
-                    Line.SetAttribute("index", data.index.ToString());
-                    Line.SetAttribute("lang", data.ChineseString.TrimEnd('\0'));
-                    m_root.AppendChild(Line);
-                }                
+                    foreach (ChineseStringData data in line_res.string_Chinese)
+                    {
+                        XmlElement Line = m_doc.CreateElement("Langs");
+                        Line.SetAttribute("index", data.index.ToString());
+                        Line.SetAttribute("lang", data.ChineseString.TrimEnd('\0'));
+                        m_root.AppendChild(Line);
+                    }
+                }
             }
-        }
 
-        public void Save()
-        {
             m_doc.Save(C_FILE_NAME);
         }
 

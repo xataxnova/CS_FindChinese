@@ -29,9 +29,9 @@ namespace CS_FindChinese
             m_doc.AppendChild(m_root);
         }
 
-        public void Record( ParseFileResult file_result )
+        public void Record( List<ParseFileResult> file_result_list )
         {
-            if (file_result.needRecord)
+            foreach (ParseFileResult file_result in file_result_list)
             {
                 XmlElement rootFile = m_doc.CreateElement("file");
                 rootFile.SetAttribute("fileName", file_result.fileInfo.FullName);
@@ -46,7 +46,7 @@ namespace CS_FindChinese
                     foreach (ChineseStringData pair in result.string_Chinese)
                     {
                         XmlElement tfile = m_doc.CreateElement("Langs");
-                        tfile.SetAttribute("lang", pair.ChineseString );
+                        tfile.SetAttribute("lang", pair.ChineseString);
                         if (Line != null)
                         {
                             Line.AppendChild(tfile);
@@ -56,11 +56,11 @@ namespace CS_FindChinese
 
                 m_root.AppendChild(rootFile);
             }
-        }
-
-        public void Save()
-        {
-            m_doc.Save(C_FILE_NAME);
+            
+            if (file_result_list.Count > 0 && file_result_list[0].needRecord)
+            {
+                m_doc.Save(C_FILE_NAME);
+            }
         }
     }
 }
