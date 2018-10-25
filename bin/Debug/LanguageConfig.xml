@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<config>
+	<script_path></script_path>
+	<json_path>assets/resources/</json_path>
+	<init_index>1</init_index>
+	<auto_replace>1</auto_replace>
+	<ingore_string>cc.log,cc.warn,cc.error,console.log,console.error,console.warn,language["</ingore_string>
+	<log_unchanged>0</log_unchanged>
+	<extra_import>import { language }from "./Localize/LoadLocalizationFile"</extra_import>
+	<change_lang_string> language["{0}"] </change_lang_string>
+	<file_exts>ts,cs</file_exts>
+	<ignore_files>Localization.ts,language.ts,layaUI.max.all.ts</ignore_files>
+</config>
