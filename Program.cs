@@ -26,7 +26,17 @@ namespace CS_FindChinese
                 FileSelector fileSelector = new FileSelector();
                 List<FileInfo> infos = fileSelector.TraceFiles(new DirectoryInfo(dir), ConfigLoader.exts, ConfigLoader.ignore_files);
 
-                fileParser.ParseAllFiles( infos );
+                List<ParseFileResult> parse_result_list = fileParser.ParseAllFiles( infos );
+
+                //尝试记录结果到XML文件
+                XMLAllFiles xml_allfile = new XMLAllFiles();
+                xml_allfile.Record( parse_result_list );
+
+                XmlLanguage xml_lang = new XmlLanguage();
+                xml_lang.Record( parse_result_list );
+
+                TSExportor_Laya tr_laya = new TSExportor_Laya();
+                tr_laya.Record( parse_result_list );
             }         
 
             //------------------end---文件遍历部分-----------------------

@@ -36,20 +36,14 @@ namespace CS_FindChinese
             return true;
         }
 
-        public void ParseAllFiles( List<FileInfo> infos )
+        public List<ParseFileResult> ParseAllFiles( List<FileInfo> infos )
         {
-            //获得exe 所在的目录 c：/aa/
-            try
+
+            foreach (FileInfo file in infos)
             {
-                foreach (FileInfo file in infos)
-                {
-                    ParseFile(file);
-                }
+                ParseFile(file);
             }
-            catch (IOException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            return this.parse_result_list;
         }
 
 
@@ -61,8 +55,7 @@ namespace CS_FindChinese
             }
 
             ParseFileResult file_result = new ParseFileResult();
-            parse_result_list.Add(file_result);
-            
+                        
             file_result.fileInfo = file;
             file_result.need_record_normal_file = ConfigLoader.log_unchanged;
 
@@ -107,13 +100,11 @@ namespace CS_FindChinese
                 }
             }
 
-            //尝试记录结果到XML文件
-            XMLAllFiles xml_allfile = new XMLAllFiles();
-            xml_allfile.Record(this.parse_result_list);
-            
-            XmlLanguage xml_lang = new XmlLanguage();
-            xml_lang.Record(this.parse_result_list);
-            
+            if (file_result.hit_chinese_count > 0)
+            {
+                parse_result_list.Add(file_result);
+            }            
+
             TextReplacer text_r = new TextReplacer(ConfigLoader.valid_extra_import, ConfigLoader.extra_import_to_append);
             text_r.ReplaceText(file.FullName, file_result);
 
