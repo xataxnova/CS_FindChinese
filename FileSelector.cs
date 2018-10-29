@@ -13,24 +13,23 @@ namespace CS_FindChinese
     {
         public List<FileInfo> filteredFiles = new List<FileInfo>();
 
-        public List<FileInfo> TraceFiles(FileSystemInfo file_info, string consern_exts, string ignores = "")
+        public List<FileInfo> TraceFiles( FileSystemInfo file_info, string consern_exts, string ignores = "" )
         {
-            List<string> list_ext = new List<string>(Regex.Split(consern_exts, ","));
-            List<string> ignore_files = new List<string>(Regex.Split(ignores, ","));
+            List<string> list_ext       = new List<string>( Regex.Split(consern_exts, ",") );
+            List<string> ignore_files   = new List<string>( Regex.Split(ignores, ",") );
 
             return TraceFiles(file_info, list_ext, ignore_files);
         }
 
-        public List<FileInfo> TraceFiles(FileSystemInfo file_info, List<string> consern_exts, List<string> ignore_files)
+        public List<FileInfo> TraceFiles( FileSystemInfo file_info, List<string> consern_exts, List<string> ignore_files )
         {
             filteredFiles.Clear();
-
             innerTraceFiles(file_info, consern_exts, ignore_files);
 
             return filteredFiles;
         }
 
-        void innerTraceFiles( FileSystemInfo file_info, List<string> consern_ext, List<string> ignore_files)
+        void innerTraceFiles( FileSystemInfo file_info, List<string> consern_ext, List<string> ignore_files )
         {
             if (consern_ext.Count == 0)
             {
