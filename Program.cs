@@ -18,7 +18,7 @@ namespace CS_FindChinese
             Console.WriteLine("按任意键开始解析");            
             Console.ReadKey();
 
-            FileParser fileParser = new FileParser( ConfigLoader.changeLangString, ConfigLoader.init_index);
+            FileParser fileParser = new FileParser( ConfigLoader.changeLangString, ConfigLoader.splinters, ConfigLoader.init_index);
 
             string dir = System.Environment.CurrentDirectory + ConfigLoader.script_path;
             if (fileParser.MakeSureDir(dir))
@@ -30,13 +30,13 @@ namespace CS_FindChinese
 
                 //尝试记录结果到XML文件
                 XMLAllFiles xml_allfile = new XMLAllFiles();
-                xml_allfile.Record( parse_result_list );
+                xml_allfile.Export( parse_result_list );
 
                 XmlLanguage xml_lang = new XmlLanguage();
-                xml_lang.Record( parse_result_list );
+                xml_lang.Export( parse_result_list );
 
-                TSExportor_Laya tr_laya = new TSExportor_Laya();
-                tr_laya.Record( parse_result_list );
+                ExportorBase code_exporter = new TSExportor_CocosCreator();
+                code_exporter.Export( parse_result_list );
             }         
 
             //------------------end---文件遍历部分-----------------------

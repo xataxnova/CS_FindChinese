@@ -6,8 +6,9 @@
 	<auto_replace>1</auto_replace>
 	<ingore_string>cc.log,cc.warn,cc.error,console.log,console.error,console.warn,language["</ingore_string>
 	<log_unchanged>0</log_unchanged>
-	<extra_import>import { language }from "./Localize/LoadLocalizationFile"</extra_import>
-	<change_lang_string> localization.string_{0} </change_lang_string>
+	<extra_import>import { localization } from "../Localize/Localization";</extra_import>
+	<change_lang_string> Localization.string_{0} </change_lang_string>
 	<file_exts>ts,cs</file_exts>
 	<ignore_files>localization.ts,Localization.ts,language.ts,layaUI.max.all.ts</ignore_files>
+	<splinters>',",`</splinters>
 </config>

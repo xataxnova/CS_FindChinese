@@ -7,15 +7,26 @@ namespace CS_FindChinese
 {
     class FileParser
     {
+        private List<char> splinters = new List<char>();        
         private IgnoreLineChecker ignoreLineChecker = null;
         private string ChangeLangStr = " language[\"{0}\"] ";
         private const int C_MAX_CHAR = 512;
         private int __start_index = 0;
         private SplitPlus sp = new SplitPlus();
         private List<ParseFileResult> parse_result_list = new List<ParseFileResult>();
-                
-        public FileParser( string change_lang_string , int start_index = 0 )
+
+        public FileParser( string change_lang_string , string splinter = "\',\"", int start_index = 0 )
         {
+            splinters.Clear();
+            string [] in_splinters = Regex.Split(splinter, ",");
+            foreach (string str in in_splinters)
+            {
+                if (string.IsNullOrEmpty(str) == false)
+                {
+                    splinters.Add(str[0]);
+                }                
+            }
+
             this.ChangeLangStr = change_lang_string;
             this.__start_index = start_index;
             ignoreLineChecker = new IgnoreLineChecker();
@@ -90,8 +101,10 @@ namespace CS_FindChinese
                 result.line_index = linei;
                 result.source_string = line;
 
-                file_result.hit_chinese_count += InnerPraseLine(ref result, '\"');
-                file_result.hit_chinese_count += InnerPraseLine(ref result, '\'');
+                foreach (char c in this.splinters)
+                {
+                    file_result.hit_chinese_count += InnerPraseLine(ref result, c);
+                }
 
                 if (result.hit_Chinese == true)
                 {

@@ -23,7 +23,7 @@ namespace CS_FindChinese
             CreateXMLFile();
         }
 
-        public void Record(List<ParseFileResult> file_result_list)
+        public void Export(List<ParseFileResult> file_result_list)
         {
             foreach (ParseFileResult file_result in file_result_list)
             {

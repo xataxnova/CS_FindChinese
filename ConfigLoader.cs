@@ -20,6 +20,7 @@ namespace CS_FindChinese
         public static string exts = "";
         public static string ignore_files = "";
         public static string changeLangString = "";
+        public static string splinters = "";
 
         private static bool inited = false;
 
@@ -75,6 +76,7 @@ namespace CS_FindChinese
             ProcessNode("/config/file_exts",            () => { exts = node.InnerText.Trim(); });
             ProcessNode("/config/ignore_files",         () => { ignore_files = node.InnerText.Trim(); });
             ProcessNode("/config/change_lang_string",   () => { changeLangString = node.InnerText.Trim(); });
+            ProcessNode("/config/splinters",            () => { splinters = node.InnerText.Trim(); });
             
             inited = true;
         }

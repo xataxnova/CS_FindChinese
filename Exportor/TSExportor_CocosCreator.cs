@@ -7,16 +7,16 @@ using System.IO;
 
 namespace CS_FindChinese
 {
-    class TSExportor_Laya
+    class TSExportor_CocosCreator:ExportorBase
     {
-        private string file_name        = "Localization.ts";
-        private string header_string    = "class localization {\n";
-        private string tail_string      = "}\n";
-        private string template_string = "\tstatic string_{0}:string = \"{1}\";\n";
+        private string file_name = "Localization.ts";
+        private string header_string = "export class Localization {\n";
+        private string tail_string = "}\nexport let localization:Localization = new Localization()";
+        private string template_string = "\tstring_{0}:string = \"{1}\";\n";
 
         public static string extra_path = "FindChineseResult/";
 
-        public void Record( List<ParseFileResult> file_result_list )
+        override public void Export(List<ParseFileResult> file_result_list)
         {
             string result = "";
             result += header_string;
@@ -34,7 +34,7 @@ namespace CS_FindChinese
             result += tail_string;
             StreamWriter sr = File.CreateText(extra_path + file_name);
             sr.Write(result);
-            sr.Close();            
+            sr.Close();
         }
     }
 }
